@@ -7,98 +7,44 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
+
     @IBOutlet private weak var textField1: UITextField!
     @IBOutlet private weak var textField2: UITextField!
     
-    @IBOutlet private weak var changeButton1: UISwitch!
-    @IBOutlet private weak var changeButton2: UISwitch!
+    @IBOutlet private weak var changeSwitch1: UISwitch!
+    @IBOutlet private weak var changeSwitch2: UISwitch!
     
-    @IBOutlet private weak var totalNumber: UILabel!
+    @IBOutlet private weak var totalNumberLabel: UILabel!
     
-    @IBOutlet private weak var textNumber2: UILabel!
-    @IBOutlet private weak var textNumber1: UILabel!
+    @IBOutlet private weak var textNumberLabel2: UILabel!
+    @IBOutlet private weak var textNumberLabel1: UILabel!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
-    
-    var currideNumber = 0
-    
-    
-    @IBAction private func tappedLeftSwitch(_ sender: UISwitch) {
-    }
-    
-    
-    @IBAction private func tappedRightSwitch(_ sender: UISwitch) {
-    }
-    
-    func tappedSswitch() {
+    @IBAction private func tappedCalculationButton(_ sender: Any) {
+
+        // textFieldに入力された数字をInt型に変換
         let num1 = Int(textField1.text ?? "") ?? 0
         let num2 = Int(textField2.text ?? "") ?? 0
+
+        // switchの状態を見て正負を入れ替える
+        let num1WithSign = changeSwitch1.isOn ? num1 : -num1
+        let num2WithSign = changeSwitch2.isOn ? num2 : -num2
         
-        let pushbutton1 = changeButton1.isOn
-        let pushbutton2 = changeButton2.isOn
+        // 計算に使用する数字をLabelに反映
+        textNumberLabel1.text = "\(num1WithSign)"
+        textNumberLabel2.text = "\(num2WithSign)"
+
+        // 計算結果を取得
+        let result = calculate(num1: num1WithSign, num2: num2WithSign)
         
-        if !pushbutton1 {
-            textNumber1.text = "\(-num1)"
-        } else {
-            textNumber1.text = "\(num1)"
-        }
-        
-        if !pushbutton2 {
-            textNumber2.text = "\(-num2)"
-        } else {
-            textNumber2.text = "\(num2)"
-        }
-        
-        let result = caculationResult(num1: num1, num2: num2, pushbutton1: pushbutton1, pushButton2: pushbutton2)
-        
-        totalNumber.text = "\(result)"
+        // 計算結果をLabelに反映
+        totalNumberLabel.text = "\(result)"
         
     }
-    func caculationResult (num1: Int,num2: Int,pushbutton1: Bool,pushButton2: Bool) -> Int {
-        var result = 0
-        if pushbutton1 && pushButton2 {
-            result = num1 + num2
-        } else if pushbutton1 && !pushButton2 {
-            result = num1 + -num2
-        } else if !pushbutton1 && pushButton2 {
-            result = -num1 + num2
-        } else if !pushbutton1 && !pushButton2 {
-            result = -num1 + -num2
-        }
-        return result
-    }
-    
-    @IBAction private func caculationButton(_ sender: Any) {
-        tappedSswitch()
-        
-        let num1 = Int(textField1.text ?? "") ?? 0
-        let num2 = Int(textField2.text ?? "") ?? 0
-        
-        textNumber1.text = "\(num1)"
-        textNumber2.text = "\(num2)"
-        
-        let pushbutton1 = changeButton1.isOn
-        let pushbutton2 = changeButton2.isOn
-        
-        if !pushbutton1 {
-            textNumber1.text = "\(-num1)"
-        } else {
-            textNumber1.text = "\(num1)"
-        }
-        
-        if !pushbutton2 {
-            textNumber2.text = "\(-num2)"
-        } else {
-            textNumber2.text = "\(num2)"
-        }
-        
-        let result = caculationResult(num1: num1, num2: num2, pushbutton1: pushbutton1, pushButton2: pushbutton2)
-        
-        totalNumber.text = "\(result)"
-        
+
+    func calculate(num1: Int, num2: Int) -> Int {
+        num1 + num2
     }
 }
+
+
