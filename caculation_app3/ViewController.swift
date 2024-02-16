@@ -38,26 +38,36 @@ class ViewController: UIViewController {
         let num1 = Int(textField1.text ?? "") ?? 0
         let num2 = Int(textField2.text ?? "") ?? 0
         
-        textNumber1.text = "\(num1)"
-        textNumber2.text = "\(num2)"
-        
         let pushbutton1 = changeButton1.isOn
         let pushbutton2 = changeButton2.isOn
+        
+        if !pushbutton1 {
+            textNumber1.text = "\(-num1)"
+        } else {
+            textNumber1.text = "\(num1)"
+        }
+        
+        if !pushbutton2 {
+            textNumber2.text = "\(-num2)"
+        } else {
+            textNumber2.text = "\(num2)"
+        }
         
         let result = caculationResult(num1: num1, num2: num2, pushbutton1: pushbutton1, pushButton2: pushbutton2)
         
         totalNumber.text = "\(result)"
+        
     }
     func caculationResult (num1: Int,num2: Int,pushbutton1: Bool,pushButton2: Bool) -> Int {
         var result = 0
         if pushbutton1 && pushButton2 {
             result = num1 + num2
         } else if pushbutton1 && !pushButton2 {
-            result = num1 - num2
+            result = num1 + -num2
         } else if !pushbutton1 && pushButton2 {
-            result = num1 - num2
+            result = -num1 + num2
         } else if !pushbutton1 && !pushButton2 {
-            result = num1 - num2
+            result = -num1 + -num2
         }
         return result
     }
@@ -73,6 +83,18 @@ class ViewController: UIViewController {
         
         let pushbutton1 = changeButton1.isOn
         let pushbutton2 = changeButton2.isOn
+        
+        if !pushbutton1 {
+            textNumber1.text = "\(-num1)"
+        } else {
+            textNumber1.text = "\(num1)"
+        }
+        
+        if !pushbutton2 {
+            textNumber2.text = "\(-num2)"
+        } else {
+            textNumber2.text = "\(num2)"
+        }
         
         let result = caculationResult(num1: num1, num2: num2, pushbutton1: pushbutton1, pushButton2: pushbutton2)
         
