@@ -7,98 +7,36 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
     @IBOutlet private weak var textField1: UITextField!
     @IBOutlet private weak var textField2: UITextField!
     
-    @IBOutlet private weak var changeButton1: UISwitch!
-    @IBOutlet private weak var changeButton2: UISwitch!
     
-    @IBOutlet private weak var totalNumber: UILabel!
+    @IBOutlet private weak var changeSwitch1: UISwitch!
+    @IBOutlet private weak var changeSwitch2: UISwitch!
     
-    @IBOutlet private weak var textNumber2: UILabel!
-    @IBOutlet private weak var textNumber1: UILabel!
+    @IBOutlet private weak var totalNumberLabel: UILabel!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
+    @IBOutlet private weak var textNumberLabel1: UILabel!
+    @IBOutlet private weak var textNumberLabel2: UILabel!
     
-    var currideNumber = 0
-    
-    
-    @IBAction private func tappedLeftSwitch(_ sender: UISwitch) {
-    }
-    
-    
-    @IBAction private func tappedRightSwitch(_ sender: UISwitch) {
-    }
-    
-    func tappedSswitch() {
-        let num1 = Int(textField1.text ?? "") ?? 0
-        let num2 = Int(textField2.text ?? "") ?? 0
-        
-        let pushbutton1 = changeButton1.isOn
-        let pushbutton2 = changeButton2.isOn
-        
-        if !pushbutton1 {
-            textNumber1.text = "\(-num1)"
-        } else {
-            textNumber1.text = "\(num1)"
-        }
-        
-        if !pushbutton2 {
-            textNumber2.text = "\(-num2)"
-        } else {
-            textNumber2.text = "\(num2)"
-        }
-        
-        let result = caculationResult(num1: num1, num2: num2, pushbutton1: pushbutton1, pushButton2: pushbutton2)
-        
-        totalNumber.text = "\(result)"
-        
-    }
-    func caculationResult (num1: Int,num2: Int,pushbutton1: Bool,pushButton2: Bool) -> Int {
-        var result = 0
-        if pushbutton1 && pushButton2 {
-            result = num1 + num2
-        } else if pushbutton1 && !pushButton2 {
-            result = num1 + -num2
-        } else if !pushbutton1 && pushButton2 {
-            result = -num1 + num2
-        } else if !pushbutton1 && !pushButton2 {
-            result = -num1 + -num2
-        }
-        return result
-    }
-    
-    @IBAction private func caculationButton(_ sender: Any) {
-        tappedSswitch()
+    @IBAction private func tappedCaculationButton(_ sender: Any) {
         
         let num1 = Int(textField1.text ?? "") ?? 0
         let num2 = Int(textField2.text ?? "") ?? 0
         
-        textNumber1.text = "\(num1)"
-        textNumber2.text = "\(num2)"
+        let numWithSign1 = changeSwitch1.isOn ? num1 : -num1
+        let numWithSign2 = changeSwitch2.isOn ? num2 : -num2
         
-        let pushbutton1 = changeButton1.isOn
-        let pushbutton2 = changeButton2.isOn
+        textNumberLabel1.text = "\(numWithSign1)"
+        textNumberLabel2.text = "\(numWithSign2)"
         
-        if !pushbutton1 {
-            textNumber1.text = "\(-num1)"
-        } else {
-            textNumber1.text = "\(num1)"
-        }
+        let result = caculate(num1: numWithSign1,num2: numWithSign2)
         
-        if !pushbutton2 {
-            textNumber2.text = "\(-num2)"
-        } else {
-            textNumber2.text = "\(num2)"
-        }
+        totalNumberLabel.text = "\(result)"
         
-        let result = caculationResult(num1: num1, num2: num2, pushbutton1: pushbutton1, pushButton2: pushbutton2)
-        
-        totalNumber.text = "\(result)"
-        
+    }
+    func caculate(num1: Int,num2: Int) -> Int {
+        num1 + num2
     }
 }
